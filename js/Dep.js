@@ -1,6 +1,3 @@
-## Vue依赖追踪原理
-
-```js
 class Dep {
     constructor(){
         this.subs = []
@@ -55,13 +52,9 @@ function observe(value){
 
 class Vue {
     constructor(options){
-        //1.挂载data到vm
         this._data = options.data
-        //2.添加getter setter
         observe(this._data)
-        //3.注册订阅者watcher
         new Watcher()
-        //4.强制添加订阅者
         console.log('添加订阅者' + this._data.test)
     }
 }
@@ -77,4 +70,3 @@ test._data.test = 'test plus'
 console.log(test._data.test)
 
 Dep.target = null
-```
