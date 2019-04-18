@@ -21,9 +21,8 @@ class Watcher {
 
 class Observer{
     constructor(data){
-        let self = this
         Object.keys(data).forEach(key => 
-            self.defineReactive(data,key,data[key])
+            this.defineReactive(data,key,data[key])
         )
     }
     defineReactive(data,key,val){

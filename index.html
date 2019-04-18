@@ -7,6 +7,36 @@
     <title>MVVM</title>
 </head>
 <body>
-    <script src="./js/Dep.js"></script>
+    <!-- <script src="./js/Dep.js"></script> -->
+    <script src="js/Watcher.js"></script>
+    <script src="js/Compile.js"></script>
+    <script src="js/Observer.js"></script>
+    <script src="js/Vue.js"></script>
+    <div id="app">
+        <h1>{{title}}</h1>
+        <button v-on:click="cTitle">按钮</button>
+        <br>
+        <input type="text" v-model="name">
+        <h1>{{name}}</h1>
+    </div>
+    <script>
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                title:'topbar',
+                name:'plus'
+            },
+            methods:{
+                cTitle(){
+                    this.title = 'change title!'
+                }
+            },
+            mounted(){
+                setTimeout(() => {
+                    this.title = 'setTimeout'
+                },3000)
+            }
+        })
+    </script>
 </body>
 </html>
