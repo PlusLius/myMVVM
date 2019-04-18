@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vuex</title>
+</head>
+<body>
+    <div id="app">
+      <h1>{{foo}}</h1>
+      <h1>{{bar}}</h1>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+    <script src="js/Vuex.js"></script>
+    <script>
+        const state = {
+          foo:'foo',
+          bar:'bar'
+        }
+        const actions = {
+          asyncFoo(commit,payload){
+              setTimeout(() => commit('foo',payload),3000)
+          },
+          asyncBar(commit,payload){
+              setTimeout(() => commit('bar',payload),3000)
+          }
+        }
+        const mutations = {
+          foo(state,type,payload){
+            state[type] = payload
+          },
+          bar(state,type,payload){
+            state[type] = payload
+          }
+        }
+        const store = new Store({state,actions,mutations});
+        window.Vue.use(Vuex)
+        new Vue({
+          name:'testRoot',
+          el:'#app',
+          store,
+          data:{
+            title:'plus'
+          },
+          beforeCreate(){
+            this.$store.dispatch('asyncFoo','我是foo')
+            this.$store.dispatch('asyncBar','我是bar')
+          },
+          computed:{  
+            foo(){
+              return this.$store._state.foo
+            },
+            bar(){
+              return this.$store._state.bar
+            }
+          }
+        })
+    </script>
+</body>
+</html>
