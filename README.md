@@ -260,3 +260,54 @@ function Vuex(_Vue){
 }
 
 ```
+
+## vue-router原理
+
+### 路由对象生成之前先生成各种钩子
+```js
+const queue = [
+    this.router.beforeEach,
+    this.current.route.beforeLeave,
+    route.beforeEnter,
+    route.afterEnter
+]
+
+function next(queue){
+    let i = -1;
+    (function _next(){
+        i++
+        if(i >= queue.length){
+            cb()
+        }else if(queue[i]){
+            queue[i](_next)
+        } else {
+            _next()
+        }
+    })()
+}
+next(queue)
+```
+
+### 生成路由对象
+
+```js
+this.current.path = route.path
+this.current.name = route.name
+this.current.params = route.params
+this.current.query = route.query
+this.current.route = route
+this.current.fullPath = route.fullPath
+```
+
+### 监听变化
+
+```js
+observer(this.history.current)
+new Watcher(this.history.current,'route',this.render.bind(this))
+```
+
+### 更新视图
+
+```js
+document.getElementById(this.container).innerHTML = this.history.current.route.component
+```
